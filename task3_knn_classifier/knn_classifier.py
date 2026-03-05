@@ -4,7 +4,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
-# loading and preprocessing data
 print("\n1. Loading and Preprocessing Data")
 
 file_path = "dataset/1) iris.csv"
@@ -35,7 +34,6 @@ X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, 
 print(f"\nTraining set size: {X_train.shape[0]} samples")
 print(f"Testing set size : {X_test.shape[0]} samples")
 
-# training and evaluating the model (K=5)
 print("\n2. Training and Evaluating Model (K=5)")
 knn = KNeighborsClassifier(n_neighbors=5)
 knn.fit(X_train, y_train)
@@ -56,7 +54,6 @@ print(conf_df)
 print("\nClassification Report (Precision/Recall/F1):")
 print(class_report)
 
-# comparing different values of K
 print("\n3. Exploring Different Values of K")
 k_values = [1, 3, 5, 7, 9, 11, 15]
 accuracies = []

@@ -6,7 +6,6 @@ from sklearn.metrics import accuracy_score, f1_score, classification_report
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-# 1. Load and Preprocess
 print("\n1. Loading and Preprocessing the Dataset")
 df = pd.read_csv("dataset/1) iris.csv")
 print(f"Dataset Shape: {df.shape}")
@@ -21,7 +20,6 @@ X_train, X_test, y_train, y_test = train_test_split(
 print(f"Training set: {X_train.shape[0]} samples")
 print(f"Testing set : {X_test.shape[0]} samples")
 
-# 2. Train Full Decision Tree
 print("\n2. Training Full Decision Tree (No Pruning)")
 dt_full = DecisionTreeClassifier(random_state=42)
 dt_full.fit(X_train, y_train)
@@ -35,7 +33,6 @@ print(f"Number of Leaves: {dt_full.get_n_leaves()}")
 print(f"Accuracy        : {acc_full:.4f}")
 print(f"F1-Score        : {f1_full:.4f}")
 
-# 3. Visualize Full Tree
 print("\n3. Visualizing Full Tree")
 fig, ax = plt.subplots(figsize=(18, 8))
 plot_tree(dt_full, feature_names=X.columns, class_names=dt_full.classes_,
@@ -46,7 +43,6 @@ plt.savefig("level2_task2_decision_tree/decision_tree_full.png", dpi=150)
 plt.close()
 print("Full tree saved as 'decision_tree_full.png'")
 
-# 4. Pruned Decision Tree (max_depth=3 to prevent overfitting)
 print("\n4. Pruning the Tree (max_depth=3)")
 dt_pruned = DecisionTreeClassifier(max_depth=3, random_state=42)
 dt_pruned.fit(X_train, y_train)
@@ -60,7 +56,6 @@ print(f"Number of Leaves: {dt_pruned.get_n_leaves()}")
 print(f"Accuracy        : {acc_pruned:.4f}")
 print(f"F1-Score        : {f1_pruned:.4f}")
 
-# Visualize Pruned Tree
 fig, ax = plt.subplots(figsize=(14, 6))
 plot_tree(dt_pruned, feature_names=X.columns, class_names=dt_pruned.classes_,
           filled=True, rounded=True, ax=ax, fontsize=9)
@@ -70,7 +65,6 @@ plt.savefig("level2_task2_decision_tree/decision_tree_pruned.png", dpi=150)
 plt.close()
 print("Pruned tree saved as 'decision_tree_pruned.png'")
 
-# 5. Comparison
 print("\n5. Full vs Pruned Tree Comparison")
 comparison = pd.DataFrame({
     "Metric"    : ["Depth", "Leaves", "Accuracy", "F1-Score (weighted)"],

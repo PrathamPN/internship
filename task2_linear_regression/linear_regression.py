@@ -4,7 +4,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score
-# loading and preprocessing data
 print("\n1. Loading and Preprocessing Data")
 
 file_path = "dataset/4) house Prediction Data Set.csv"
@@ -38,13 +37,11 @@ X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, 
 print(f"\nTraining set size: {X_train.shape[0]} samples")
 print(f"Testing set size : {X_test.shape[0]} samples")
 
-# training the model
 print("\n2. Training the Model")
 model = LinearRegression()
 model.fit(X_train, y_train)
 print("Linear Regression model trained successfully.")
 
-# interpreting model coefficients
 print("\n3. Interpreting Model Coefficients")
 print(f"Model Intercept (Base Value): {model.intercept_:.3f}")
 
@@ -65,7 +62,6 @@ top_coef = coef_df.iloc[0]['Coefficient']
 direction = "increase" if top_coef > 0 else "decrease"
 print(f"-> A 1 std deviation increase in '{top_feature}' leads to a {abs(top_coef):.3f} point {direction} in predicted house price.")
 
-# evaluating the model
 print("\n4. Evaluating the Model")
 y_pred = model.predict(X_test)
 

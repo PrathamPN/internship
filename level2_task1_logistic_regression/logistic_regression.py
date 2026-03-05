@@ -9,18 +9,16 @@ from sklearn.metrics import (accuracy_score, precision_score, recall_score,
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-# 1. Load and Preprocess
+
 print("\n1. Loading and Preprocessing the Dataset")
 df = pd.read_csv("dataset/churn-bigml-80.csv")
 print(f"Dataset Shape: {df.shape}")
 print(f"Target: 'Churn' (binary - True/False)")
 
-# Encode binary categoricals
 le = LabelEncoder()
 for col in ["International plan", "Voice mail plan", "Churn"]:
     df[col] = le.fit_transform(df[col])
 
-# One-hot encode State
 df = pd.get_dummies(df, columns=["State"], drop_first=True)
 
 X = df.drop(columns=["Churn"])
@@ -36,13 +34,11 @@ print(f"Training set: {X_train.shape[0]} samples")
 print(f"Testing set : {X_test.shape[0]} samples")
 print(f"Class distribution (Churn): {dict(y.value_counts())}")
 
-# 2. Train Logistic Regression Model
 print("\n2. Training Logistic Regression Model")
 model = LogisticRegression(max_iter=1000, random_state=42)
 model.fit(X_train, y_train)
 print("Model trained successfully.")
 
-# 3. Interpret Coefficients and Odds Ratio
 print("\n3. Model Coefficients and Odds Ratios")
 coef_df = pd.DataFrame({
     "Feature": X.columns,
@@ -54,7 +50,6 @@ print("\nTop 10 features by Odds Ratio:")
 print(coef_df.head(10).to_string(index=False))
 print("\nInterpretation: Odds Ratio > 1 means the feature increases churn probability.")
 
-# 4. Evaluate the Model
 print("\n4. Evaluating the Model")
 y_pred = model.predict(X_test)
 y_prob = model.predict_proba(X_test)[:, 1]
@@ -75,7 +70,6 @@ print(confusion_matrix(y_test, y_pred))
 print("\nClassification Report:")
 print(classification_report(y_test, y_pred, target_names=["No Churn", "Churn"]))
 
-# ROC Curve
 fpr, tpr, _ = roc_curve(y_test, y_prob)
 plt.figure(figsize=(7, 5))
 plt.plot(fpr, tpr, color='darkorange', lw=2, label=f'ROC Curve (AUC = {auc:.2f})')

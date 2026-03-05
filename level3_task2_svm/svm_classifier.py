@@ -11,8 +11,6 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import warnings
 warnings.filterwarnings('ignore')
-# 1. Load and Preprocess
-# Use Iris with 2 classes for clear binary comparison: versicolor vs virginica
 print("\n1. Loading and Preprocessing the Dataset")
 df = pd.read_csv("dataset/1) iris.csv")
 df = df[df['species'].isin(['versicolor', 'virginica'])].copy()
@@ -21,7 +19,7 @@ print(f"Dataset Shape: {df.shape}")
 
 le = LabelEncoder()
 X = df.drop(columns=["species"])
-y = le.fit_transform(df["species"])   # versicolor=0, virginica=1
+y = le.fit_transform(df["species"])
 
 scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X)
@@ -50,19 +48,16 @@ def evaluate(name, model, X_tr, y_tr, X_te, y_te):
     print(classification_report(y_te, y_pred, target_names=le.classes_))
     return model, acc, prec, rec, auc
 
-# 2. Train SVM - Linear Kernel
 print("\n2. Training SVM with Linear Kernel")
 svm_linear = SVC(kernel='linear', probability=False, random_state=42)
 svm_linear, acc_l, prec_l, rec_l, auc_l = evaluate(
     "Linear SVM", svm_linear, X_train, y_train, X_test, y_test)
 
-# 3. Train SVM - RBF Kernel
 print("\n3. Training SVM with RBF Kernel")
 svm_rbf = SVC(kernel='rbf', probability=False, random_state=42)
 svm_rbf, acc_r, prec_r, rec_r, auc_r = evaluate(
     "RBF SVM", svm_rbf, X_train, y_train, X_test, y_test)
 
-# 4. Compare Results
 print("\n4. Comparison: Linear vs RBF Kernel")
 comp = pd.DataFrame({
     "Metric"   : ["Accuracy", "Precision", "Recall", "AUC"],
@@ -71,7 +66,6 @@ comp = pd.DataFrame({
 })
 print(comp.to_string(index=False))
 
-# 5. Visualize Decision Boundary using first 2 PCA components
 print("\n5. Visualizing Decision Boundaries (PCA 2D projection)")
 
 pca = PCA(n_components=2, random_state=42)

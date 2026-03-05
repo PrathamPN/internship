@@ -4,7 +4,6 @@ from sklearn.preprocessing import LabelEncoder, StandardScaler
 from sklearn.model_selection import train_test_split
 import os
 
-# loading and inspecting the data
 print("Loading and Inspecting the Dataset")
 
 df = pd.read_csv("dataset/churn-bigml-80.csv")
@@ -22,7 +21,6 @@ print(df.head())
 print("\nStatistical Summary")
 print(df.describe())
 
-# handling the missing data
 print("\nHandling Missing Data")
 
 missing_before = df.isnull().sum()
@@ -61,7 +59,6 @@ else:
     print("\nNo missing values found in the dataset!")
     print("  (Demonstrating the check is still important in a real pipeline)")
 
-# encoding categorical variables
 print("\nEncoding Categorical Variables")
 
 print("\nCategorical Columns")
@@ -85,7 +82,6 @@ print(f"  After one-hot encoding: {df.shape[1]} total columns")
 print("\nEncoded Dataset Sample (first 5 rows, first 15 cols)")
 print(df.iloc[:5, :15])
 
-# normalizing / standardizing numerical features
 print("\nNormalizing / Standardizing Numerical Features")
 
 target_col = "Churn"
@@ -114,7 +110,6 @@ print(df[original_numerical].head(3))
 print(f"\nStandardization applied -- Mean ~ 0, Std ~ 1")
 print(f"  Example: '{original_numerical[0]}' -> mean={df[original_numerical[0]].mean():.4f}, std={df[original_numerical[0]].std():.4f}")
 
-# splitting into training and testing sets
 print("\nSplitting into Training and Testing Sets")
 
 X = df.drop(columns=[target_col])
@@ -134,7 +129,6 @@ print("\nTarget Class Distribution")
 print(f"  Training set: {dict(y_train.value_counts())}")
 print(f"  Testing set : {dict(y_test.value_counts())}")
 
-# saving the processed data
 print("\nSaving Processed Datasets")
 
 os.makedirs("processed_dataset", exist_ok=True)
